@@ -3,20 +3,24 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class NetworkController : MonoBehaviourPun
+public class NetworkController : MonoBehaviourPunCallbacks
 {
 
-    private CharactarController controller;
-    private Vector3 vectorVelocity;
-    private bool groundedPlayer;
-    [SerializeField] private float playerSpeed = 10.0f;
-    [SerializeField] private float jumpHeight = 1.0f;
-    private float gravity = 9.81f;
-
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        PhotonNetwork.ConnectUsingSettings();       
+    }
+    public override void OnConnectedToMaster()
+    {
+        //Debug.Log("You have been connected to the " + PhotonNetwork.CloudRegion + " server");
+        PhotonNetwork.JoinLobby();
+    }
+
+    public override void OnJoinedLobby()
+    {
+        SceneManager.LoadScene("Lobby");
     }
 }
