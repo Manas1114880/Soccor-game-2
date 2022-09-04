@@ -8,31 +8,33 @@ using UnityEngine.SceneManagement;
 public class TimeConstraintScript : MonoBehaviour
 {
     public Text TimeText;
-    public int MatchTime = 180;
+    public int MatchTime;
+    public string sceneName;
+    private float startTime = 0;
+    //private bool timerRunning;
     
 
     void Start()
     {
+        //timeCountingDown = MatchTime - Time.time;
         SetTimeDisplay(MatchTime);
+        startTime = Time.time;
     }
 
     void Update()
     {
-        while (Time.time < MatchTime)
-        {
-            if (Time.time < MatchTime)
+        Debug.Log(startTime);
+            if (Time.time - startTime < MatchTime)
             {
-                SetTimeDisplay(MatchTime - (Time.time));//Stuff inside perenthesis makes sure the time counts down
-
+                SetTimeDisplay(MatchTime - (Time.time - startTime));//Stuff inside perenthesis makes sure the time counts down
             }
             else
             {
-                //If time reaches 0 and you havent scores 3 goals, then it restarts the level
+            //If time reaches 0 and you havent scores 3 goals, then it restarts the level
+            //timeCountingDown = MatchTime;
                 SetTimeDisplay(0);
                 SceneManager.LoadScene("Soccor Game(Photon)");
-             
             }
-        }
     }
     
     private void SetTimeDisplay(float TimeDisplay)
